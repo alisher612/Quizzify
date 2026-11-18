@@ -7,9 +7,8 @@ Featuring a premium dark interface, multiple knowledge categories, practice and 
 
 ## Live Demo
 
-**[Explore Quizzify]https://quizzify-pi.vercel.app**
+**[Explore Quizzify] https://quizzify-pi.vercel.app**
 
-> Replace the URL above with your deployed Quizzify URL once deployment is complete.
 
 ## Features
 
