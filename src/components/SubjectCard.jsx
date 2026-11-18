@@ -1,45 +1,150 @@
-'use client';
 
-import Image from 'next/image';
-import { useRouter } from "next/navigation";
+"use client";
+
+import Link from "next/link";
+import {
+  FaCode,
+  FaCalculator,
+  FaFlask,
+  FaLandmark,
+  FaGlobe,
+  FaBookOpen,
+  FaPalette,
+  FaMusic,
+  FaFutbol,
+  FaArrowUpRightFromSquare,
+} from "react-icons/fa6";
+
+const subjectStyles = {
+  coding: {
+    icon: FaCode,
+    color: "text-cyan-300",
+    background: "bg-cyan-400/10",
+    border: "group-hover:border-cyan-400/40",
+    glow: "from-cyan-500/15",
+    description: "Programming, development and technology.",
+  },
+  math: {
+    icon: FaCalculator,
+    color: "text-violet-300",
+    background: "bg-violet-400/10",
+    border: "group-hover:border-violet-400/40",
+    glow: "from-violet-500/15",
+    description: "Numbers, formulas and logical thinking.",
+  },
+  science: {
+    icon: FaFlask,
+    color: "text-emerald-300",
+    background: "bg-emerald-400/10",
+    border: "group-hover:border-emerald-400/40",
+    glow: "from-emerald-500/15",
+    description: "Explore the world of scientific discovery.",
+  },
+  history: {
+    icon: FaLandmark,
+    color: "text-amber-300",
+    background: "bg-amber-400/10",
+    border: "group-hover:border-amber-400/40",
+    glow: "from-amber-500/15",
+    description: "Discover events that shaped our world.",
+  },
+  geography: {
+    icon: FaGlobe,
+    color: "text-sky-300",
+    background: "bg-sky-400/10",
+    border: "group-hover:border-sky-400/40",
+    glow: "from-sky-500/15",
+    description: "Explore countries, places and our planet.",
+  },
+  literature: {
+    icon: FaBookOpen,
+    color: "text-pink-300",
+    background: "bg-pink-400/10",
+    border: "group-hover:border-pink-400/40",
+    glow: "from-pink-500/15",
+    description: "Books, authors and literary knowledge.",
+  },
+  art: {
+    icon: FaPalette,
+    color: "text-orange-300",
+    background: "bg-orange-400/10",
+    border: "group-hover:border-orange-400/40",
+    glow: "from-orange-500/15",
+    description: "Explore creativity, artists and art history.",
+  },
+  music: {
+    icon: FaMusic,
+    color: "text-fuchsia-300",
+    background: "bg-fuchsia-400/10",
+    border: "group-hover:border-fuchsia-400/40",
+    glow: "from-fuchsia-500/15",
+    description: "Discover instruments, composers and music.",
+  },
+  sports: {
+    icon: FaFutbol,
+    color: "text-lime-300",
+    background: "bg-lime-400/10",
+    border: "group-hover:border-lime-400/40",
+    glow: "from-lime-500/15",
+    description: "Test your knowledge of sports and games.",
+  },
+};
 
 export default function SubjectCard({ subject }) {
-  const router = useRouter();
+  const key = subject.name.toLowerCase();
 
-  const handleClick = () => {
-    router.push(`/quiz/${subject.name.toLowerCase()}`);
+  const style = subjectStyles[key] || {
+    icon: FaBookOpen,
+    color: "text-violet-300",
+    background: "bg-violet-400/10",
+    border: "group-hover:border-violet-400/40",
+    glow: "from-violet-500/15",
+    description: "Discover something new and test your knowledge.",
   };
 
+  const Icon = style.icon;
+  const questionCount = subject.questions?.length || 0;
+
   return (
-    <div
-      onClick={handleClick}
-      className="group relative border rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 cursor-pointer transform hover:-translate-y-2 hover:scale-105"
+    <Link
+      href={`/configure/${encodeURIComponent(key)}`}
+      className={`group relative flex min-h-[218px] flex-col overflow-hidden rounded-2xl border border-white/[0.08] bg-[#191F32] p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/20 ${style.border}`}
     >
-      {/* Subject Image with slight zoom effect */}
-      <div className="overflow-hidden">
-        <Image
-          src={subject.image} 
-          alt={`${subject.name} image`}
-          width={400} 
-          height={300} 
-          className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
-        />
+      <div
+        className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${style.glow} to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100`}
+      />
+
+      <div className="relative flex items-start justify-between">
+        <div
+          className={`flex h-14 w-14 items-center justify-center rounded-2xl ${style.background}`}
+        >
+          <Icon className={`text-2xl ${style.color}`} />
+        </div>
+
+        <span className="flex h-9 w-9 items-center justify-center rounded-full border border-white/[0.08] text-slate-500 transition-all group-hover:border-violet-400/30 group-hover:bg-violet-500/10 group-hover:text-violet-300">
+          <FaArrowUpRightFromSquare className="text-sm" />
+        </span>
       </div>
 
-      {/* Gradient Background for Text */}
-      <div className="p-4 bg-gradient-to-b from-white to-gray-50">
-        {/* Subject Name */}
-        <h2 className="text-2xl font-bold text-center text-black group-hover:text-blue-600 transition-colors duration-300">
+      <div className="relative mt-6">
+        <h3 className="text-lg font-bold text-white transition-colors group-hover:text-violet-200">
           {subject.name}
-        </h2>
-        {/* Number of Questions */}
-        <p className="text-center text-gray-700 text-lg mt-2">
-          {subject.questions.length} Questions
+        </h3>
+
+        <p className="mt-2 text-sm leading-6 text-slate-400">
+          {subject.description || style.description}
         </p>
       </div>
 
-      {/* Decoration Line */}
-      <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-400 to-green-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
-    </div>
+      <div className="relative mt-auto flex items-center justify-between border-t border-white/[0.07] pt-4">
+        <span className="text-xs font-medium text-slate-500">
+          {questionCount} questions
+        </span>
+
+        <span className="text-xs font-semibold text-violet-300 transition-transform group-hover:translate-x-1">
+          Configure quiz →
+        </span>
+      </div>
+    </Link>
   );
 }

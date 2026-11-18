@@ -1,19 +1,110 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --max-width: 1920px; 
+  color-scheme: dark;
+  --background: #101322;
+  --surface: #191f32;
+  --surface-light: #202840;
+  --primary: #7956e8;
+  --primary-light: #a78bfa;
+  --success: #22c58b;
+  --text-primary: #f5f3ff;
+  --text-secondary: #a7aec4;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px;
 }
 
 body {
+  margin: 0;
+  background: var(--background);
+  color: var(--text-primary);
   font-family: Arial, Helvetica, sans-serif;
-  max-width: var(--max-width); /* Apply max width to the body */
-  margin: 0 auto; /* Center the body */
+  min-height: 100vh;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  cursor: pointer;
+}
+
+::selection {
+  background: rgba(121, 86, 232, 0.4);
+  color: white;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+
+  .text-gradient {
+    @apply bg-gradient-to-r from-violet-300 via-purple-400 to-indigo-400 bg-clip-text text-transparent;
+  }
+
+  .glass-panel {
+    @apply border border-white/10 bg-white/[0.035] backdrop-blur-xl;
+  }
+
+  .section-container {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.08);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 5s ease-in-out infinite;
+}
+
+::-webkit-scrollbar {
+  width: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: #101322;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #34304d;
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #7956e8;
 }
